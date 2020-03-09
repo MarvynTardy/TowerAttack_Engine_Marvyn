@@ -25,12 +25,20 @@ public class MapManager : MonoBehaviour
     [Range(0.0f,0.5f)]
     public float downScale = 0.1f;
     public bool showDebugGrid = true;
-    public List<Vector3> debugLockRemoved;
+    //public List<Vector3> debugLockRemoved;
 
-    [ContextMenu("InitializeMap")]
-    public void InitializeMap()
+    [ContextMenu("InitializeMapRandomly")]
+    public void InitializeMapRandomly()
     {
         // ====== Intialization des Datas.
+        CreateRandomMap();
+
+        // ====== Creation de la View
+        CreateMapViewFromData();
+    }
+
+    private void CreateRandomMap()
+    {
         // Squares total random
         // IntializeSquareGrid();
         // Square en fonction du pourcent des Lock
@@ -41,17 +49,21 @@ public class MapManager : MonoBehaviour
         // Edges Vert
         InitializeEdgeGrid(ref mapData.edgesVert, (mapData.width + 1) * mapData.height, mapData.percentEdgeVert);
 
-        // Initialisation de la liste de debug
-        debugLockRemoved = new List<Vector3>();
+        // Initialisation de la liste de debug des squares removed
+        // debugLockRemoved = new List<Vector3>();
+
         // On appel la regle de validation des Edges VS Squares
         ProcessRuleSquareVSEdge(mapData.edgesHori, mapData.width, new Vector3(0, 0, -1));
         ProcessRuleSquareVSEdge(mapData.edgesVert, mapData.width + 1, new Vector3(-1, 0, 0));
+    }
 
+    public void CreateMapViewFromData()
+    {
         // ====== Creation de la View
         // Clean NavContainer
         DestroyAllChild(navContainer);
 
-        if(generateView)
+        if (generateView)
         {
             // Instantiation des view des squares en fonction des Datas.
             CreateSquaresView();
@@ -63,6 +75,18 @@ public class MapManager : MonoBehaviour
             // Creation de la surface en fonction des Datas.
             CreateSurface();
         }
+    }
+
+    [ContextMenu("InitializeEmptyMap")]
+    public void InitiliazeEmptyMap()
+    {
+        // ====== Intialization des Datas.
+        InitilizeEmptyGridSquare();
+
+        InitizeEmptyEdges();
+
+        // ====== Creation de la View
+        CreateMapViewFromData();
     }
 
     private void DestroyAllChild(GameObject parent)
@@ -78,7 +102,7 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    private Vector3 GetPositionFromIndex(int i, int width)
+   public Vector3 GetPositionFromIndex(int i, int width)
     {
         Vector3 pos = Vector3.zero;
         // Calcul des coordonnées du square dans la grid à partir de l'index dand le tableau.
@@ -99,6 +123,15 @@ public class MapManager : MonoBehaviour
         return Random.Range(0.1f, 100.0f) <= percent;
     }
 
+    public void SetSquareState(Vector3 position, SquareState newSquareState)
+    {
+        int index = GetIndexSquareFromPos(position);
+        if(index != -1)
+        {
+            mapData.grid[index].state = newSquareState;
+        }
+    }
+
     private SquareState RandomStateWithSkipOneValue(SquareState skippedValue)
     {
         int nbrValueInEnum = System.Enum.GetValues(typeof(SquareState)).Length;
@@ -112,9 +145,15 @@ public class MapManager : MonoBehaviour
         return (SquareState)val;
     }
     #region SQUARES
-    private void IntializeSquareGridRandom()
+    private void InitilizeEmptyGridSquare()
     {
         mapData.grid = new SquareData[mapData.width * mapData.height];
+    }
+
+    private void IntializeSquareGridRandom()
+    {
+        InitilizeEmptyGridSquare();
+
         // Parcours des square pour générer aléatoirement un state.
         for (int i = 0; i < mapData.grid.Length; i++)
         {
@@ -142,6 +181,7 @@ public class MapManager : MonoBehaviour
             }
         }
     }
+    
 
     // Permet de créer la vue des squares en fonction de leur state.
     private void CreateSquaresView()
@@ -172,6 +212,13 @@ public class MapManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Return index if position is in Grid.
+    /// Return -1 instead.
+    /// </summary>
+    /// <param name="pos"></param>
+    /// <returns></returns>
+      
     private int GetIndexSquareFromPos(Vector3 pos)
     {
         // Test si la position sort des limites
@@ -183,8 +230,23 @@ public class MapManager : MonoBehaviour
         return -1;
     }
     #endregion SQUARES
-
+    public int GetIndexEdgesFromPos(Vector3 pos)
+    {
+        // Test si la position sort des limites
+        if (pos.x >= 0 && pos.z >= 0 && pos.x < mapData.width && pos.z < mapData.height)
+        {
+            return ((int)pos.z * mapData.width) + (int)pos.x;
+        }
+        // Pas de square à la position demandée => on retourne -1
+        return -1;
+    }
     #region EDGES
+    private void InitizeEmptyEdges()
+    {
+        mapData.edgesHori = new bool[mapData.width * (mapData.height + 1)];
+        mapData.edgesVert = new bool[(mapData.width + 1) * mapData.height];
+    }
+
     private void InitializeEdgeGrid(ref bool[] arrayEdges, int numberElement, int percentRandom)
     {
         arrayEdges = new bool[numberElement];
@@ -209,6 +271,7 @@ public class MapManager : MonoBehaviour
             {
                 // On recupere la position de la edge en fonction de l'index.
                 Vector3 newPosSquare = GetPositionFromIndex(i, width);
+                
 
                 // On test à cette position s'il y a un Square Lock.
                 ValidateIfNoLockSquare(newPosSquare);
@@ -235,7 +298,7 @@ public class MapManager : MonoBehaviour
                 mapData.grid[indexSquare].state = SquareState.Normal;
 
                 // On ajoute le debug
-                debugLockRemoved.Add(newPosSquare);
+                //debugLockRemoved.Add(newPosSquare);
             }
         }
     }
@@ -338,11 +401,11 @@ public class MapManager : MonoBehaviour
             }
         }
 
-        foreach (Vector3 position in debugLockRemoved)
+        /*foreach (Vector3 position in debugLockRemoved)
         {
             Gizmos.color = Color.red;
             Gizmos.DrawCube(new Vector3(position.x + 0.5f, 1.1f, position.z + 0.5f), (Vector3.one) / 10);
-        }
+        }*/
     }
 
     private void ShowGizmoMapSquares()
