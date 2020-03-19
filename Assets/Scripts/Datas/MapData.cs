@@ -36,11 +36,6 @@ public enum SquareState
     Grass,
     Special
 }
-public enum BrushState
-{
-    One,
-    Line
-}
 
 public enum Alignment
 {
@@ -53,8 +48,6 @@ public enum Alignment
 public struct SquareData
 {
     public SquareState state;
-
-    public BrushState brushState;
 
     public Alignment aligment;
 }
