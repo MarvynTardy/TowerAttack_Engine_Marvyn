@@ -203,12 +203,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   alignment: 2
-  life: 1
+  startLife: 1
+  m_CurrentLife: 1
   popAmount: 1
   attackContainer: {fileID: 2672909135643723876}
   damageAttack: 1
   rangeDetect: 2
   timeWaitNextAttack: 1
+  prefabBullet: {fileID: 3712589141299704198, guid: 71d413d67332b8f43ae3fefadea1d021,
+    type: 3}
   moveSpeed: 1
   globalTarget: {fileID: 0}
   timeWaitBeforeMove: 1

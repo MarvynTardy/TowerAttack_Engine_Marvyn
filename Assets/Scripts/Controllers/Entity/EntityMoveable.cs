@@ -20,6 +20,8 @@ public class EntityMoveable : Entity
     
     private NavMeshAgent m_NavMeshAgent;
 
+
+
     // Initialisation - Construction de l'entité
     public override void InitEntity()
     {
@@ -74,6 +76,7 @@ public class EntityMoveable : Entity
     {
         if(base.DoAttack(targetEntity))
         {
+
             m_NavMeshAgent.isStopped = true;
             m_CurrentTimeBeforeNextMove = 0;
             return true;

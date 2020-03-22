@@ -26,6 +26,7 @@ public class Entity : MonoBehaviour
 
     public static Vector3 myPoint = Vector3.zero;
 
+    public GameObject prefabBullet;
     public void Awake()
     {
         InitEntity();
@@ -119,6 +120,16 @@ public class Entity : MonoBehaviour
         // On verifie si l'entity est valide
         if(targetEntity.IsValidEntity())
         {
+            // On instance la bullet
+            GameObject instantiated = PoolManager.Instance.GetElement(prefabBullet);
+            instantiated.transform.position = gameObject.transform.position;
+            instantiated.SetActive(true);
+
+            // On donne une target a la bullet
+            Bullet bullet = GetComponent<Bullet>();
+            //bullet.target = targetEntity;
+
+
             // On applique les degats
             targetEntity.DamageEntity(damageAttack);
 
