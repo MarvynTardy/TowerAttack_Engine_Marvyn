@@ -55,7 +55,7 @@ public class EntityMoveable : Entity
 
     public override void Update()
     {
-        base.Update();
+        
         if(m_NavMeshAgent.isStopped)
         {
             if (m_CurrentTimeBeforeNextMove < timeWaitBeforeMove)
@@ -68,6 +68,7 @@ public class EntityMoveable : Entity
                 SetDestination();
             }
         }
+        //base.Update();
     }
 
     protected override bool DoAttack(Entity targetEntity)

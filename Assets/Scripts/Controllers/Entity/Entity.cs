@@ -4,6 +4,7 @@
 [RequireComponent(typeof(CapsuleCollider))]
 public class Entity : MonoBehaviour
 {
+    private EntityManager m_EntityManager;
     [Header("Props")]
     public Alignment alignment;
 
@@ -12,6 +13,8 @@ public class Entity : MonoBehaviour
     private int m_CurrentLife = 1;
 
     public int popAmount = 1;
+   
+    
 
     [Header("AttackProps")]
     public GameObject attackContainer;
@@ -23,6 +26,9 @@ public class Entity : MonoBehaviour
     public float timeWaitNextAttack = 1;
     private float m_CurrentTimeBeforeNextAttack = 0;
     private bool m_CanAttack = true;
+    [Header("Time Next Spawn")]
+    public float timeWaitNextSpawn = 1;
+    public float m_CurrentTimeBeforeNextSpawn = 0;
 
     public static Vector3 myPoint = Vector3.zero;
 
@@ -49,8 +55,9 @@ public class Entity : MonoBehaviour
     }
 
     public virtual void Update()
-    {        
-        if(!m_CanAttack)
+    {
+        
+        if (!m_CanAttack)
         {
             if(m_CurrentTimeBeforeNextAttack < timeWaitNextAttack)
             {
@@ -61,6 +68,7 @@ public class Entity : MonoBehaviour
                 m_CanAttack = true;
             }
         }
+        SpawnMonster();
     }
 
     // Life
@@ -130,5 +138,19 @@ public class Entity : MonoBehaviour
             return true;
         }
         return false;
+    }
+    private void SpawnMonster()
+    {
+        if (m_CurrentTimeBeforeNextSpawn < timeWaitNextSpawn)
+        {
+            m_CurrentTimeBeforeNextSpawn += Time.deltaTime;
+        }
+        else
+        {
+            GameObject instantiated = PoolManager.Instance.GetElement(m_EntityManager.prefabMonster);
+            instantiated.transform.position = m_EntityManager.prefabTowerIA.transform.position;
+            instantiated.SetActive(true);
+            m_CurrentTimeBeforeNextSpawn = 0;
+        }
     }
 }
