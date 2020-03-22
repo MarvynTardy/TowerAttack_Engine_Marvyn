@@ -10,7 +10,7 @@ public class EntityMoveable : Entity
     public float moveSpeed = 1;
 
     // Range de detection
-    public CapsuleCollider detectionRange;
+    //public CapsuleCollider detectionRange;
 
     [Header("Target")]
     // Variable target
@@ -89,7 +89,7 @@ public class EntityMoveable : Entity
         return false;
     }
 
-    private void OnTriggerStay(Collider other)
+    /*private void OnTriggerStay(Collider other)
     {
         if(other != null)
         {
@@ -100,5 +100,5 @@ public class EntityMoveable : Entity
         {
             m_NavMeshAgent.SetDestination(globalTarget.transform.position);
         }
-    }
+    }*/
 }

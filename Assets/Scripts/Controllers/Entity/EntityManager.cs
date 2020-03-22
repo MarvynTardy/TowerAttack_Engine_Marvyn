@@ -8,11 +8,6 @@ public class EntityManager : MonoBehaviour
 
     public GameObject prefabEnemy;
 
-    public GameObject prefabMonster;
-
-    public GameObject prefabTowerIA;
-
-    public GameObject prefabTowerPlayer;
     
     public GameObject globalTarget;
 
@@ -67,7 +62,7 @@ public class EntityManager : MonoBehaviour
             if (Physics.Raycast(ray, out RaycastHit hit, mult, LayerMask.GetMask("Default")))
             {
                 // On recupère un élement depuis le poolmanager
-                GameObject instantiated = PoolManager.Instance.GetElement(prefabTowerIA);
+                GameObject instantiated = PoolManager.Instance.GetElement(prefabEnemy);
                 instantiated.transform.position = hit.point;
                 instantiated.SetActive(true);
             }

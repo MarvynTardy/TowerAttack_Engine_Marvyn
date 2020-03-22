@@ -5,7 +5,8 @@
 public class Entity : MonoBehaviour
 {
     public GameObject prefabMonster;
-    public GameObject prefabTowerIA;
+    public GameObject globalTarget;
+    
     [Header("Props")]
     public Alignment alignment;
 
@@ -34,6 +35,7 @@ public class Entity : MonoBehaviour
     public static Vector3 myPoint = Vector3.zero;
 
     public GameObject prefabBullet;
+    public GameObject angeContainer;
 
    
 
@@ -73,7 +75,11 @@ public class Entity : MonoBehaviour
                 m_CanAttack = true;
             }
         }
-        SpawnMonster();
+        if (GameObject.FindWithTag("Tower"))
+        {
+            SpawnMonster();
+        }
+            
     }
 
     // Life
@@ -156,18 +162,32 @@ public class Entity : MonoBehaviour
     }
     private void SpawnMonster()
     {
-        if (m_CurrentTimeBeforeNextSpawn < timeWaitNextSpawn)
-        {
-            m_CurrentTimeBeforeNextSpawn += Time.deltaTime;
-        }
-        else
-        {
+        
             
-            GameObject instantiated = PoolManager.Instance.GetElement(prefabMonster);
-            instantiated.transform.position = prefabTowerIA.transform.position;
-            instantiated.SetActive(true);
-            m_CurrentTimeBeforeNextSpawn = 0;
+            if (m_CurrentTimeBeforeNextSpawn < timeWaitNextSpawn)
+            {
+                m_CurrentTimeBeforeNextSpawn += Time.deltaTime;
+            }
+            else
+            {
 
-        }
+                GameObject instantiated = PoolManager.Instance.GetElement(prefabMonster);
+                instantiated.transform.position = transform.position;
+                instantiated.SetActive(true);
+                m_CurrentTimeBeforeNextSpawn = 0;
+                Entity entity = instantiated.GetComponent<Entity>();
+                if (entity)
+                {
+                    if (entity is EntityMoveable moveable)
+                    {
+                        moveable.SetGlobalTarget(globalTarget);
+                    }
+                    entity.RestartEntity();
+                }
+
+
+            }
+        
+        
     }
 }
