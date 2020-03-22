@@ -9,9 +9,11 @@ public class EntityMoveable : Entity
     [Range(1, 50)]
     public float moveSpeed = 1;
 
+
     [Header("Target")]
     // Variable target
     public GameObject globalTarget;
+    //public GameObject globalTarget;
     
     [Header("Stop Time")]
     // Variable de temps d'arret

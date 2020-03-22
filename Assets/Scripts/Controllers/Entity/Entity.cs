@@ -4,7 +4,8 @@
 [RequireComponent(typeof(CapsuleCollider))]
 public class Entity : MonoBehaviour
 {
-    private EntityManager m_EntityManager;
+    public GameObject prefabMonster;
+    public GameObject prefabTowerIA;
     [Header("Props")]
     public Alignment alignment;
 
@@ -33,6 +34,9 @@ public class Entity : MonoBehaviour
     public static Vector3 myPoint = Vector3.zero;
 
     public GameObject prefabBullet;
+
+   
+
     public void Awake()
     {
         InitEntity();
@@ -158,10 +162,12 @@ public class Entity : MonoBehaviour
         }
         else
         {
-            GameObject instantiated = PoolManager.Instance.GetElement(m_EntityManager.prefabMonster);
-            instantiated.transform.position = m_EntityManager.prefabTowerIA.transform.position;
+            
+            GameObject instantiated = PoolManager.Instance.GetElement(prefabMonster);
+            instantiated.transform.position = prefabTowerIA.transform.position;
             instantiated.SetActive(true);
             m_CurrentTimeBeforeNextSpawn = 0;
+
         }
     }
 }
