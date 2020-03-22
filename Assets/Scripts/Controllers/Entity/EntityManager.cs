@@ -16,6 +16,7 @@ public class EntityManager : MonoBehaviour
     
     public GameObject globalTarget;
 
+
     private Camera m_CurrentCamera;
 
     private void Awake()

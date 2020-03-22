@@ -212,7 +212,12 @@ MonoBehaviour:
   damageAttack: 1
   rangeDetect: 2
   timeWaitNextAttack: 1
+<<<<<<< HEAD
   timeWaitNextSpawn: 1
+=======
+  prefabBullet: {fileID: 3712589141299704198, guid: 71d413d67332b8f43ae3fefadea1d021,
+    type: 3}
+>>>>>>> 3cbba45238591faddad2e7657fbb1b1d535317b0
   moveSpeed: 1
   globalTarget: {fileID: 549381587482201855, guid: 21669229bdc0d9241a7b16d9edd08024,
     type: 3}
