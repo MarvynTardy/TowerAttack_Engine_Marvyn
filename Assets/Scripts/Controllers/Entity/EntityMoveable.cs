@@ -9,6 +9,8 @@ public class EntityMoveable : Entity
     [Range(1, 50)]
     public float moveSpeed = 1;
 
+    // Range de detection
+    public CapsuleCollider detectionRange;
 
     [Header("Target")]
     // Variable target
@@ -79,11 +81,24 @@ public class EntityMoveable : Entity
     {
         if(base.DoAttack(targetEntity))
         {
-
+            Debug.Log("Attack!");
             m_NavMeshAgent.isStopped = true;
             m_CurrentTimeBeforeNextMove = 0;
             return true;
         }
         return false;
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if(other != null)
+        {
+            Debug.Log("Enemy Detected");
+            m_NavMeshAgent.SetDestination(other.transform.position);
+        }
+        else
+        {
+            m_NavMeshAgent.SetDestination(globalTarget.transform.position);
+        }
     }
 }
