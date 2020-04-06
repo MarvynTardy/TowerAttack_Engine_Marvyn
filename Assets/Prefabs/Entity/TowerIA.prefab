@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 549381587482201854}
   m_Layer: 9
   m_Name: TowerIA
-  m_TagString: Tower
+  m_TagString: TowerIA
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -93,6 +93,7 @@ MonoBehaviour:
   timeWaitNextSpawn: 1
   m_CurrentTimeBeforeNextSpawn: 0
   prefabBullet: {fileID: 0}
+  angeContainer: {fileID: 0}
 --- !u!54 &549381587482201841
 Rigidbody:
   m_ObjectHideFlags: 0

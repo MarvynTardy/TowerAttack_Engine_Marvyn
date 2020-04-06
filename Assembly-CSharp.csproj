@@ -66,12 +66,20 @@
     <Compile Include="Assets\Scripts\Controllers\Entity\Entity.cs" />
     <Compile Include="Assets\Scripts\Controllers\Entity\EntityManager.cs" />
     <Compile Include="Assets\Scripts\Controllers\Entity\EntityMoveable.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Entity\Projectile.cs" />
+    <Compile Include="Assets\Scripts\Controllers\LevelManager.cs" />
     <Compile Include="Assets\Scripts\Controllers\MapManager.cs" />
+    <Compile Include="Assets\Scripts\Controllers\PlayerManager.cs" />
     <Compile Include="Assets\Scripts\Controllers\SoundManager.cs" />
+    <Compile Include="Assets\Scripts\Controllers\UI\PlayerUIManager.cs" />
+    <Compile Include="Assets\Scripts\Controllers\UI\PopButton.cs" />
     <Compile Include="Assets\Scripts\Core\Pooling\Poolable.cs" />
     <Compile Include="Assets\Scripts\Core\Pooling\PoolManager.cs" />
     <Compile Include="Assets\Scripts\Core\Singleton.cs" />
     <Compile Include="Assets\Scripts\Core\SingletonMono.cs" />
+    <Compile Include="Assets\Scripts\Datas\Deck.cs" />
+    <Compile Include="Assets\Scripts\Datas\Entity\EntityData.cs" />
+    <Compile Include="Assets\Scripts\Datas\Entity\EntityMoveableData.cs" />
     <Compile Include="Assets\Scripts\Datas\MapData.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/marvyn/Documents/unity/Tower_Attack_Engine_Marvyn/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
